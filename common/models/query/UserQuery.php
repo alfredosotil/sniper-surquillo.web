@@ -3,14 +3,13 @@
 namespace common\models\query;
 
 use common\models\User;
-use yii\db\ActiveQuery;
 
 /**
- * Class UserQuery
- * @package common\models\query
- * @author Eugene Terentev <eugene@terentev.net>
+ * This is the ActiveQuery class for [[\common\models\query\User]].
+ *
+ * @see \common\models\query\User
  */
-class UserQuery extends ActiveQuery
+class UserQuery extends \yii\db\ActiveQuery
 {
     /**
      * @return $this
@@ -28,5 +27,23 @@ class UserQuery extends ActiveQuery
     {
         $this->andWhere(['status' => User::STATUS_ACTIVE]);
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     * @return \common\models\query\User[]|array
+     */
+    public function all($db = null)
+    {
+        return parent::all($db);
+    }
+
+    /**
+     * @inheritdoc
+     * @return \common\models\query\User|array|null
+     */
+    public function one($db = null)
+    {
+        return parent::one($db);
     }
 }

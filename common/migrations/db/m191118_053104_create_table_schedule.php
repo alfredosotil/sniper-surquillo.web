@@ -18,8 +18,6 @@ class m191118_053104_create_table_schedule extends Migration
             'day_of_week' => $this->string()->notNull(),
             'start_hour' => $this->string()->notNull(),
             'end_hour' => $this->string()->notNull(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
             'is_active' => $this->smallInteger()->notNull()->defaultValue('1'),
             'uuid' => $this->string(36),
             'lock' => $this->bigInteger(),
@@ -30,6 +28,8 @@ class m191118_053104_create_table_schedule extends Migration
             'updated_at' => $this->integer(),
             'deleted_at' => $this->integer(),
         ]);
+
+        $this->addForeignKey('fk_schedule_gym_discipline', '{{%schedule}}', 'gym_discipline_id', '{{%gym_discipline}}', 'id');
     }
 
     /**
@@ -37,9 +37,8 @@ class m191118_053104_create_table_schedule extends Migration
      */
     public function safeDown()
     {
-        echo "m191118_053104_create_table_schedule cannot be reverted.\n";
-
-        return false;
+        $this->dropForeignKey('fk_schedule_gym_discipline', '{{%schedule}}');
+        $this->dropTable('{{%schedule}}');
     }
 
     /*

@@ -157,6 +157,82 @@ Yii::info(Yii::$app->components["i18n"]["translations"]['*']['class'], 'test');
                         'visible' => Yii::$app->user->can('administrator'),
                     ],
                     [
+                        'label' => Yii::t('backend', 'User Profiles'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/user-profile/index'],
+                        'active' => Yii::$app->controller->id === 'user-profile',
+                        'visible' => Yii::$app->user->can('administrator'),
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'User Histories'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/user-history/index'],
+                        'active' => Yii::$app->controller->id === 'user-history',
+                        'visible' => Yii::$app->user->can('administrator'),
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'User Assistance'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/user-assistance/index'],
+                        'active' => Yii::$app->controller->id === 'user-assistance',
+                        'visible' => Yii::$app->user->can('administrator'),
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Core Business'),
+                        'url' => '#',
+                        'icon' => '<i class="fa fa-flag"></i>',
+                        'options' => ['class' => 'treeview'],
+                        'active' => in_array(Yii::$app->controller->id, ['schedule', 'gym-discipline', 'subscription', 'product', 'service']),
+                        'visible' => Yii::$app->user->can('administrator'),
+                        'items' => [
+                            [
+                                'label' => Yii::t('backend', 'Schedule'),
+                                'url' => ['/schedule/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Gym Discipline'),
+                                'url' => ['/gym-discipline/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Product'),
+                                'url' => ['/product/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Service'),
+                                'url' => ['/service/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Subscriptions'),
+                                'url' => ['/subscription/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Bills'),
+                        'url' => '#',
+                        'icon' => '<i class="fa fa-flag"></i>',
+                        'options' => ['class' => 'treeview'],
+                        'active' => in_array(Yii::$app->controller->id, ['order', 'order-details']),
+                        'visible' => Yii::$app->user->can('administrator'),
+                        'items' => [
+                            [
+                                'label' => Yii::t('backend', 'Order'),
+                                'url' => ['/order/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Order Details'),
+                                'url' => ['/order-details/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ]
+                        ],
+                    ],
+                    [
                         'label' => Yii::t('backend', 'Content'),
                         'options' => ['class' => 'header'],
                     ],

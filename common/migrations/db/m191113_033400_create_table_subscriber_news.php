@@ -17,7 +17,7 @@ class m191113_033400_create_table_subscriber_news extends Migration
             'email' => $this->string()->notNull()->unique(),
             'phone_number' => $this->string(),
             'created_at' => $this->integer(),
-            'active' => $this->smallInteger()->notNull()->defaultValue(1),
+            'is_active' => $this->smallInteger()->notNull()->defaultValue(1),
         ]);
     }
 

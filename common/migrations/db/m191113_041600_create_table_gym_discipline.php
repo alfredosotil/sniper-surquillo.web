@@ -14,8 +14,8 @@ class m191113_041600_create_table_gym_discipline extends Migration
     {
         $this->createTable('{{%gym_discipline}}', [
             'id' => $this->primaryKey(),
-            'avatar_path' => $this->string(),
-            'avatar_base_url' => $this->string(),
+            'image_path' => $this->string(),
+            'image_base_url' => $this->string(),
             'name' => $this->string(50),
             'description' => $this->string(500),
             'points' => $this->integer(11),

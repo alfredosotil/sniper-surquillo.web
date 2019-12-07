@@ -12,7 +12,6 @@ class m140703_123000_user extends Migration
     {
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'uuid' => $this->string(36),
             'username' => $this->string(32),
             'auth_key' => $this->string(32)->notNull(),
             'access_token' => $this->string(40)->notNull(),
@@ -22,8 +21,14 @@ class m140703_123000_user extends Migration
             'email' => $this->string()->notNull(),
             'type' => $this->smallInteger()->notNull()->defaultValue(User::TYPE_STUDENT),
             'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'uuid' => $this->string(36),
+            'lock' => $this->bigInteger(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
+            'deleted_at' => $this->integer(),
             'logged_at' => $this->integer()
         ]);
 
@@ -38,7 +43,15 @@ class m140703_123000_user extends Migration
             'birthday' => $this->string(32),
             'total_points' => $this->integer(11),
             'locale' => $this->string(32)->notNull(),
-            'gender' => $this->smallInteger(1)
+            'gender' => $this->smallInteger(1),
+            'uuid' => $this->string(36),
+            'lock' => $this->bigInteger(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'deleted_by' => $this->integer(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
+            'deleted_at' => $this->integer(),
         ]);
 
         $this->addForeignKey('fk_user', '{{%user_profile}}', 'user_id', '{{%user}}', 'id', 'cascade', 'cascade');
