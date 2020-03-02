@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\base\OrderDetail;
+use common\models\OrderDetail;
 
 /**
- * common\models\search\OrderDetailSearch represents the model behind the search form about `common\models\base\OrderDetail`.
+ * OrderDetailSearch represents the model behind the search form about `common\models\OrderDetail`.
  */
- class OrderDetailSearch extends OrderDetail
+class OrderDetailSearch extends OrderDetail
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ use common\models\base\OrderDetail;
     public function rules()
     {
         return [
-            [['id', 'class_id', 'order_id', 'qty', 'is_active', 'lock', 'created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
+            [['id', 'class_id', 'order_id', 'qty', 'active', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['class_type', 'description', 'uuid'], 'safe'],
             [['price_per_unit', 'price', 'tax', 'vat'], 'number'],
         ];
@@ -48,11 +48,7 @@ use common\models\base\OrderDetail;
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -65,14 +61,11 @@ use common\models\base\OrderDetail;
             'tax' => $this->tax,
             'vat' => $this->vat,
             'qty' => $this->qty,
-            'is_active' => $this->is_active,
-            'lock' => $this->lock,
+            'active' => $this->active,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'deleted_by' => $this->deleted_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
         ]);
 
         $query->andFilterWhere(['like', 'class_type', $this->class_type])

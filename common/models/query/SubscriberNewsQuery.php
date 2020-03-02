@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\SubscriberNews]].
+ * This is the ActiveQuery class for [[SubscriberNews]].
  *
- * @see \common\models\query\SubscriberNews
+ * @see SubscriberNews
  */
 class SubscriberNewsQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\SubscriberNews[]|array
+     * {@inheritdoc}
+     * @return SubscriberNews[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class SubscriberNewsQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\SubscriberNews|array|null
+     * {@inheritdoc}
+     * @return SubscriberNews|array|null
      */
     public function one($db = null)
     {

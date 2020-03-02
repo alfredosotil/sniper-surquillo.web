@@ -23,15 +23,12 @@ class m191118_045641_create_table_order_detail extends Migration
             'tax' => $this->double()->notNull()->defaultValue('0'),
             'vat' => $this->double()->notNull()->defaultValue('0'),
             'qty' => $this->integer()->notNull()->defaultValue('0'),
-            'is_active' => $this->smallInteger()->notNull()->defaultValue('1'),
+            'active' => $this->smallInteger()->notNull()->defaultValue('1'),
             'uuid' => $this->string(36),
-            'lock' => $this->bigInteger(),
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
-            'deleted_by' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
-            'deleted_at' => $this->integer(),
         ]);
 
         $this->addForeignKey('fk_order_detail_order', '{{%order_detail}}', 'order_id', '{{%order}}', 'id');
@@ -45,19 +42,4 @@ class m191118_045641_create_table_order_detail extends Migration
         $this->dropForeignKey('fk_order_detail_order', '{{%order_detail}}');
         $this->dropTable('{{%order_detail}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m191118_045641_create_table_order_detail cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

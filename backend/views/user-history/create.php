@@ -4,17 +4,17 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\UserHistory */
+/* @var $model common\models\UserHistory */
 
-$this->title = Yii::t('app', 'Create User History');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Histories'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create {modelClass}', [
+    'modelClass' => 'User History',
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'User Histories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-history-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
+    <?php echo $this->render('_form', [
         'model' => $model,
     ]) ?>
 

@@ -1,58 +1,118 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\OrderDetail */
-/* @var $form yii\widgets\ActiveForm */
-
+/* @var $model common\models\OrderDetail */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
 <div class="order-detail-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?php echo $form->field($model, 'order_id')->widget(
+        \kartik\select2\Select2::class,
+        [
+            'data' => \yii\helpers\ArrayHelper::map(
+                \common\models\Order::find()->all(),
+                'id',
+                'IdAndDate'
+            ),
+            'options' => ['placeholder' => 'Select a Order ...'],
+            'pluginOptions' => [
+                'allowClear' => false
+            ],
+        ]) ?>
 
-    <?= $form->field($model, 'class_id')->textInput(['placeholder' => 'Class']) ?>
-
-    <?= $form->field($model, 'class_type')->textInput(['maxlength' => true, 'placeholder' => 'Class Type']) ?>
-
-    <?= $form->field($model, 'order_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\base\Order::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Order')],
+    <?php echo $form->field($model, 'class_type')->widget(
+        \kartik\select2\Select2::class, [
+        'hideSearch' => true,
+        'data' => [\common\models\Product::class => 'Product', \common\models\Service::class => 'Service'],
+        'options' => ['placeholder' => 'Select Order Detail Type...'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => false
         ],
-    ]); ?>
+        'pluginEvents' => [
+            'change' => "function() {                
+                var val = $('#orderdetail-class_type').val();
+                console.log('change value: ' + val); 
+                }"
+        ]
+    ])
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'placeholder' => 'Description']) ?>
+    ?>
 
-    <?= $form->field($model, 'price_per_unit')->textInput(['placeholder' => 'Price Per Unit']) ?>
+    <?php echo $form->field($model, 'class_id')->widget(
+        \kartik\depdrop\DepDrop::class, [
+        'type' => \kartik\depdrop\DepDrop::TYPE_SELECT2,
+        'pluginOptions' => [
+            'depends' => ['orderdetail-class_type'],
+            'placeholder' => 'Select...',
+            'url' => \yii\helpers\Url::to(['/order-detail/data-class-id'])
+        ]
+    ]) ?>
 
-    <?= $form->field($model, 'price')->textInput(['placeholder' => 'Price']) ?>
+    <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tax')->textInput(['placeholder' => 'Tax']) ?>
+    <?php echo $form->field($model, 'price_per_unit')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' Soles',
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'vat')->textInput(['placeholder' => 'Vat']) ?>
+    <?php echo $form->field($model, 'price')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' Soles',
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'qty')->textInput(['placeholder' => 'Qty']) ?>
+    <?php echo $form->field($model, 'tax')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' %',
+                'digits' => 3,
+                'max' => 100,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'is_active')->textInput(['placeholder' => 'Is Active']) ?>
+    <?php echo $form->field($model, 'vat')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' %',
+                'digits' => 3,
+                'max' => 100,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?php echo $form->field($model, 'qty')->widget(
+        \kartik\touchspin\TouchSpin::class, [
+            'options' => ['placeholder' => 'Adjust ...'],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'active')->widget(\kartik\checkbox\CheckboxX::class, [
+        'autoLabel' => true,
+        'pluginOptions' => ['threeState' => false]
+    ])->label(false) ?>
 
     <div class="form-group">
-    <?php if(Yii::$app->controller->action->id != 'save-as-new'): ?>
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    <?php endif; ?>
-    <?php if(Yii::$app->controller->action->id != 'create'): ?>
-        <?= Html::submitButton(Yii::t('app', 'Save As New'), ['class' => 'btn btn-info', 'value' => '1', 'name' => '_asnew']) ?>
-    <?php endif; ?>
-        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

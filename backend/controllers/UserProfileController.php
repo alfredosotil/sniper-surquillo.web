@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
+use Intervention\Image\ImageManagerStatic;
 use Yii;
-use common\models\base\UserProfile;
+use common\models\UserProfile;
 use common\models\search\UserProfileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,27 +15,35 @@ use yii\filters\VerbFilter;
  */
 class UserProfileController extends Controller
 {
+
+    /** @inheritdoc */
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
             ],
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'pdf', 'save-as-new'],
-                        'roles' => ['@']
-                    ],
-                    [
-                        'allow' => false
-                    ]
-                ]
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'picture-upload' => [
+                'class' => \trntv\filekit\actions\UploadAction::class,
+                'deleteRoute' => 'picture-delete',
+                'on afterSave' => function ($event) {
+                    /* @var $file \League\Flysystem\File */
+                    $file = $event->file;
+                    $img = \Intervention\Image\ImageManagerStatic::make($file->read())->fit(215, 215);
+                    $file->put($img->encode());
+                }
+            ],
+            'picture-delete' => [
+                'class' => \trntv\filekit\actions\DeleteAction::class
             ]
         ];
     }
@@ -61,7 +70,6 @@ class UserProfileController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,13 +84,12 @@ class UserProfileController extends Controller
     {
         $model = new UserProfile();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -93,19 +100,14 @@ class UserProfileController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->request->post('_asnew') == '1') {
-            $model = new UserProfile();
-        }else{
-            $model = $this->findModel($id);
-        }
+        $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -116,66 +118,11 @@ class UserProfileController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-    
-    /**
-     * 
-     * Export UserProfile information into PDF format.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionPdf($id) {
-        $model = $this->findModel($id);
 
-        $content = $this->renderAjax('_pdf', [
-            'model' => $model,
-        ]);
-
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
-            'content' => $content,
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            'cssInline' => '.kv-heading-1{font-size:18px}',
-            'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
-        ]);
-
-        return $pdf->render();
-    }
-
-    /**
-    * Creates a new UserProfile model by another data,
-    * so user don't need to input all field from scratch.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    *
-    * @param mixed $id
-    * @return mixed
-    */
-    public function actionSaveAsNew($id) {
-        $model = new UserProfile();
-
-        if (Yii::$app->request->post('_asnew') != '1') {
-            $model = $this->findModel($id);
-        }
-    
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('saveAsNew', [
-                'model' => $model,
-            ]);
-        }
-    }
-    
     /**
      * Finds the UserProfile model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -187,8 +134,7 @@ class UserProfileController extends Controller
     {
         if (($model = UserProfile::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

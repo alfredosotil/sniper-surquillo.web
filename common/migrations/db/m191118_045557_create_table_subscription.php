@@ -19,15 +19,12 @@ class m191118_045557_create_table_subscription extends Migration
             'starts_at' => $this->integer()->notNull(),
             'ends_at' => $this->integer()->notNull(),
             'subscription_state_id' => $this->integer()->notNull()->defaultValue('1'),
-            'is_active' => $this->integer()->notNull()->defaultValue('1'),
+            'active' => $this->smallInteger()->defaultValue(1),
             'uuid' => $this->string(36),
-            'lock' => $this->bigInteger(),
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
-            'deleted_by' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
-            'deleted_at' => $this->integer(),
         ]);
 
         $this->addForeignKey('fk_user_subscription', '{{%subscription}}', 'user_id', '{{%user}}', 'id', 'cascade', 'cascade');
@@ -43,19 +40,4 @@ class m191118_045557_create_table_subscription extends Migration
         $this->dropForeignKey('fk_service_subscription', '{{%subscription}}');
         $this->dropTable('{{%subscription}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m191118_045557_create_table_subscription cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

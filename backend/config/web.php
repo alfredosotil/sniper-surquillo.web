@@ -20,6 +20,29 @@ $config = [
         ],
     ],
     'modules' => [
+        'datecontrol' => [
+            'class' => kartik\datecontrol\Module::class,
+            // format settings for displaying each date attribute (ICU format example)
+            'displaySettings' => [
+                kartik\datecontrol\Module::FORMAT_DATE => 'dd-MM-yyyy',
+                kartik\datecontrol\Module::FORMAT_TIME => 'hh:mm:ss a',
+                kartik\datecontrol\Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a',
+            ],
+            // format settings for saving each date attribute (PHP format example)
+            'saveSettings' => [
+                kartik\datecontrol\Module::FORMAT_DATE => 'php:U', // saves as unix timestamp
+                kartik\datecontrol\Module::FORMAT_TIME => 'php:U',
+                kartik\datecontrol\Module::FORMAT_DATETIME => 'php:U',
+            ],
+            'ajaxConversion' => true,
+            'autoWidget' => true,
+        ],
+        'gridview' => [
+            'class' => kartik\grid\Module::class
+        ],
+        'markdown' => [
+            'class' => kartik\markdown\Module::class,
+        ],
         'gridview' => [
             'class' => '\kartik\grid\Module',
             // see settings on http://demos.krajee.com/grid#module

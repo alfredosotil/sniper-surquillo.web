@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\Subscription]].
+ * This is the ActiveQuery class for [[\common\models\Subscription]].
  *
- * @see \common\models\query\Subscription
+ * @see \common\models\Subscription
  */
 class SubscriptionQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\Subscription[]|array
+     * {@inheritdoc}
+     * @return \common\models\Subscription[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class SubscriptionQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\Subscription|array|null
+     * {@inheritdoc}
+     * @return \common\models\Subscription|array|null
      */
     public function one($db = null)
     {

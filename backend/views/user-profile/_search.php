@@ -1,53 +1,45 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\search\UserProfileSearch */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="form-user-profile-search">
+<div class="user-profile-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'user_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\base\User::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose User')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?php echo $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'firstname')->textInput(['maxlength' => true, 'placeholder' => 'Firstname']) ?>
+    <?php echo $form->field($model, 'firstname') ?>
 
-    <?= $form->field($model, 'middlename')->textInput(['maxlength' => true, 'placeholder' => 'Middlename']) ?>
+    <?php echo $form->field($model, 'middlename') ?>
 
-    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true, 'placeholder' => 'Lastname']) ?>
+    <?php echo $form->field($model, 'lastname') ?>
 
-    <?= $form->field($model, 'avatar_path')->textInput(['maxlength' => true, 'placeholder' => 'Avatar Path']) ?>
+    <?php echo $form->field($model, 'avatar_path') ?>
 
-    <?php /* echo $form->field($model, 'avatar_base_url')->textInput(['maxlength' => true, 'placeholder' => 'Avatar Base Url']) */ ?>
+    <?php // echo $form->field($model, 'avatar_base_url') ?>
 
-    <?php /* echo $form->field($model, 'phone_number')->textInput(['maxlength' => true, 'placeholder' => 'Phone Number']) */ ?>
+    <?php // echo $form->field($model, 'phone_number') ?>
 
-    <?php /* echo $form->field($model, 'birthday')->textInput(['maxlength' => true, 'placeholder' => 'Birthday']) */ ?>
+    <?php // echo $form->field($model, 'birthday') ?>
 
-    <?php /* echo $form->field($model, 'total_points')->textInput(['placeholder' => 'Total Points']) */ ?>
+    <?php // echo $form->field($model, 'total_points') ?>
 
-    <?php /* echo $form->field($model, 'locale')->textInput(['maxlength' => true, 'placeholder' => 'Locale']) */ ?>
+    <?php // echo $form->field($model, 'locale') ?>
 
-    <?php /* echo $form->field($model, 'gender')->textInput(['placeholder' => 'Gender']) */ ?>
-
-    <?php /* echo $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); */ ?>
+    <?php // echo $form->field($model, 'gender') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?php echo Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

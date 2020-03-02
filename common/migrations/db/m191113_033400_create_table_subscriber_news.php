@@ -28,19 +28,4 @@ class m191113_033400_create_table_subscriber_news extends Migration
     {
         $this->dropTable("{{%subscriber_news}}");
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m191113_033400_create_table_subscriber_news cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

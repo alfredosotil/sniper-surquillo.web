@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\base\Order;
+use common\models\Order;
 
 /**
- * common\models\search\OrderSearch represents the model behind the search form about `common\models\base\Order`.
+ * OrderSearch represents the model behind the search form about `common\models\Order`.
  */
- class OrderSearch extends Order
+class OrderSearch extends Order
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ use common\models\base\Order;
     public function rules()
     {
         return [
-            [['id', 'user_id', 'is_paid', 'type_payment', 'is_active', 'lock', 'created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
-            [['optional_client_name', 'phone_number', 'email', 'notes', 'uuid'], 'safe'],
+            [['id', 'user_id', 'is_paid', 'type_payment', 'active', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['optional_client_name', 'phone_number', 'email', 'annotations', 'uuid'], 'safe'],
             [['amount', 'tax'], 'number'],
         ];
     }
@@ -48,11 +48,7 @@ use common\models\base\Order;
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -63,20 +59,17 @@ use common\models\base\Order;
             'tax' => $this->tax,
             'is_paid' => $this->is_paid,
             'type_payment' => $this->type_payment,
-            'is_active' => $this->is_active,
-            'lock' => $this->lock,
+            'active' => $this->active,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'deleted_by' => $this->deleted_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
         ]);
 
         $query->andFilterWhere(['like', 'optional_client_name', $this->optional_client_name])
             ->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'notes', $this->notes])
+            ->andFilterWhere(['like', 'annotations', $this->annotations])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;

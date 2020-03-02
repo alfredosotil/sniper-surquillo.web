@@ -1,53 +1,55 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\search\OrderDetailSearch */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="form-order-detail-search">
+<div class="order-detail-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?php echo $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'class_id')->textInput(['placeholder' => 'Class']) ?>
+    <?php echo $form->field($model, 'class_id') ?>
 
-    <?= $form->field($model, 'class_type')->textInput(['maxlength' => true, 'placeholder' => 'Class Type']) ?>
+    <?php echo $form->field($model, 'class_type') ?>
 
-    <?= $form->field($model, 'order_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\base\Order::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Order')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?php echo $form->field($model, 'order_id') ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'placeholder' => 'Description']) ?>
+    <?php echo $form->field($model, 'description') ?>
 
-    <?php /* echo $form->field($model, 'price_per_unit')->textInput(['placeholder' => 'Price Per Unit']) */ ?>
+    <?php // echo $form->field($model, 'price_per_unit') ?>
 
-    <?php /* echo $form->field($model, 'price')->textInput(['placeholder' => 'Price']) */ ?>
+    <?php // echo $form->field($model, 'price') ?>
 
-    <?php /* echo $form->field($model, 'tax')->textInput(['placeholder' => 'Tax']) */ ?>
+    <?php // echo $form->field($model, 'tax') ?>
 
-    <?php /* echo $form->field($model, 'vat')->textInput(['placeholder' => 'Vat']) */ ?>
+    <?php // echo $form->field($model, 'vat') ?>
 
-    <?php /* echo $form->field($model, 'qty')->textInput(['placeholder' => 'Qty']) */ ?>
+    <?php // echo $form->field($model, 'qty') ?>
 
-    <?php /* echo $form->field($model, 'is_active')->textInput(['placeholder' => 'Is Active']) */ ?>
+    <?php // echo $form->field($model, 'active') ?>
 
-    <?php /* echo $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); */ ?>
+    <?php // echo $form->field($model, 'uuid') ?>
+
+    <?php // echo $form->field($model, 'created_by') ?>
+
+    <?php // echo $form->field($model, 'updated_by') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
+
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?php echo Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

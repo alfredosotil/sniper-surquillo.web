@@ -1,53 +1,55 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\search\OrderSearch */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="form-order-search">
+<div class="order-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?php echo $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'user_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\base\User::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose User')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?php echo $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'optional_client_name')->textInput(['maxlength' => true, 'placeholder' => 'Optional Client Name']) ?>
+    <?php echo $form->field($model, 'optional_client_name') ?>
 
-    <?= $form->field($model, 'amount')->textInput(['placeholder' => 'Amount']) ?>
+    <?php echo $form->field($model, 'amount') ?>
 
-    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true, 'placeholder' => 'Phone Number']) ?>
+    <?php echo $form->field($model, 'phone_number') ?>
 
-    <?php /* echo $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Email']) */ ?>
+    <?php // echo $form->field($model, 'email') ?>
 
-    <?php /* echo $form->field($model, 'tax')->textInput(['placeholder' => 'Tax']) */ ?>
+    <?php // echo $form->field($model, 'tax') ?>
 
-    <?php /* echo $form->field($model, 'is_paid')->textInput(['placeholder' => 'Is Paid']) */ ?>
+    <?php // echo $form->field($model, 'is_paid') ?>
 
-    <?php /* echo $form->field($model, 'type_payment')->textInput(['placeholder' => 'Type Payment']) */ ?>
+    <?php // echo $form->field($model, 'type_payment') ?>
 
-    <?php /* echo $form->field($model, 'notes')->textInput(['maxlength' => true, 'placeholder' => 'Notes']) */ ?>
+    <?php // echo $form->field($model, 'notes') ?>
 
-    <?php /* echo $form->field($model, 'is_active')->textInput(['placeholder' => 'Is Active']) */ ?>
+    <?php // echo $form->field($model, 'active') ?>
 
-    <?php /* echo $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); */ ?>
+    <?php // echo $form->field($model, 'uuid') ?>
+
+    <?php // echo $form->field($model, 'created_by') ?>
+
+    <?php // echo $form->field($model, 'updated_by') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
+
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?php echo Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

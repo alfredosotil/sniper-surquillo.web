@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\Service]].
+ * This is the ActiveQuery class for [[Service]].
  *
- * @see \common\models\query\Service
+ * @see Service
  */
 class ServiceQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\Service[]|array
+     * {@inheritdoc}
+     * @return Service[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class ServiceQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\Service|array|null
+     * {@inheritdoc}
+     * @return Service|array|null
      */
     public function one($db = null)
     {

@@ -217,7 +217,7 @@ Yii::info(Yii::$app->components["i18n"]["translations"]['*']['class'], 'test');
                         'url' => '#',
                         'icon' => '<i class="fa fa-flag"></i>',
                         'options' => ['class' => 'treeview'],
-                        'active' => in_array(Yii::$app->controller->id, ['order', 'order-details']),
+                        'active' => in_array(Yii::$app->controller->id, ['order', 'order-detail']),
                         'visible' => Yii::$app->user->can('administrator'),
                         'items' => [
                             [
@@ -227,9 +227,47 @@ Yii::info(Yii::$app->components["i18n"]["translations"]['*']['class'], 'test');
                             ],
                             [
                                 'label' => Yii::t('backend', 'Order Details'),
-                                'url' => ['/order-details/index'],
+                                'url' => ['/order-detail/index'],
                                 'icon' => '<i class="fa fa-circle-o"></i>',
                             ]
+                        ],
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Events'),
+                        'url' => '#',
+                        'icon' => '<i class="fa fa-flag"></i>',
+                        'options' => ['class' => 'treeview'],
+                        'active' => in_array(Yii::$app->controller->id, [
+                                'event',
+                                'event-category',
+                                'event-competitor',
+                                'competitor',
+                                'match',
+                        ]),
+                        'visible' => Yii::$app->user->can('administrator'),
+                        'items' => [
+                            [
+                                'label' => Yii::t('backend', 'Event'),
+                                'url' => ['/event/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Event Category'),
+                                'url' => ['/event-category/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],[
+                                'label' => Yii::t('backend', 'Event Competitor'),
+                                'url' => ['/event-competitor/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],[
+                                'label' => Yii::t('backend', 'Competitor'),
+                                'url' => ['/competitor/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],[
+                                'label' => Yii::t('backend', 'Match'),
+                                'url' => ['/match/index'],
+                                'icon' => '<i class="fa fa-circle-o"></i>',
+                            ],
                         ],
                     ],
                     [

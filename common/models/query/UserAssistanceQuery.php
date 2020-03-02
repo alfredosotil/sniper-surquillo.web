@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\UserAssistance]].
+ * This is the ActiveQuery class for [[UserAssistance]].
  *
- * @see \common\models\query\UserAssistance
+ * @see UserAssistance
  */
 class UserAssistanceQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\UserAssistance[]|array
+     * {@inheritdoc}
+     * @return UserAssistance[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class UserAssistanceQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\UserAssistance|array|null
+     * {@inheritdoc}
+     * @return UserAssistance|array|null
      */
     public function one($db = null)
     {

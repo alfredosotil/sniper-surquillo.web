@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\base\UserAssistance;
+use common\models\UserAssistance;
 
 /**
- * common\models\search\UserAssistanceSearch represents the model behind the search form about `common\models\base\UserAssistance`.
+ * UserAssistanceSearch represents the model behind the search form about `common\models\UserAssistance`.
  */
- class UserAssistanceSearch extends UserAssistance
+class UserAssistanceSearch extends UserAssistance
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ use common\models\base\UserAssistance;
     public function rules()
     {
         return [
-            [['id', 'user_id', 'gym_discipline_id', 'lock', 'created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
+            [['id', 'user_id', 'gym_discipline_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['uuid'], 'safe'],
         ];
     }
@@ -47,11 +47,7 @@ use common\models\base\UserAssistance;
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -59,13 +55,10 @@ use common\models\base\UserAssistance;
             'id' => $this->id,
             'user_id' => $this->user_id,
             'gym_discipline_id' => $this->gym_discipline_id,
-            'lock' => $this->lock,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'deleted_by' => $this->deleted_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
         ]);
 
         $query->andFilterWhere(['like', 'uuid', $this->uuid]);

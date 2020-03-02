@@ -1,58 +1,80 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\UserProfile */
-/* @var $form yii\widgets\ActiveForm */
-
+/* @var $model common\models\UserProfile */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
 <div class="user-profile-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'user_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\base\User::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose User')],
-        'pluginOptions' => [
-            'allowClear' => true
+    <?php echo $form->field($model, 'user_id')->widget(
+        \kartik\select2\Select2::class,
+        [
+            'data' => \yii\helpers\ArrayHelper::map(
+                \common\models\User::find()->all(),
+                'id',
+                'UsernameAndEmail'
+            ),
+            'options' => ['placeholder' => 'Select a User ...'],
+            'pluginOptions' => [
+                'allowClear' => false
+            ],
+        ]) ?>
+
+    <?php echo $form->field($model, 'picture')->widget(\trntv\filekit\widget\Upload::class, [
+        'url'=>['avatar-upload']
+    ]) ?>
+
+    <?php echo $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
+
+    <?php echo $form->field($model, 'middlename')->textInput(['maxlength' => true]) ?>
+
+    <?php echo $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
+
+    <?php echo $form->field($model, 'locale')->dropDownlist(Yii::$app->params['availableLocales']) ?>
+
+    <?php echo $form->field($model, 'gender')->dropDownlist([
+        \common\models\UserProfile::GENDER_FEMALE => Yii::t('backend', 'Female'),
+        \common\models\UserProfile::GENDER_MALE => Yii::t('backend', 'Male')
+    ]) ?>
+
+    <?php echo $form->field($model, 'phone_number')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'prefix' => '+51 ',
+                'groupSeparator' => ' ',
+                'digits' => 9   ,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'birthday')->widget(
+        \kartik\datecontrol\DateControl::class, [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'ajaxConversion' => true,
+        'autoWidget' => true,
+        'displayFormat' => 'php:d-F-Y h:i:s A',
+        'saveFormat' => 'php:U',
+        'readonly' => true,
+        'widgetOptions' => [
+            'pluginOptions' => [
+                'autoclose' => true,
+                'todayHighlight' => true,
+                'todayBtn' => true,
+            ]
         ],
-    ]); ?>
-
-    <?= $form->field($model, 'firstname')->textInput(['maxlength' => true, 'placeholder' => 'Firstname']) ?>
-
-    <?= $form->field($model, 'middlename')->textInput(['maxlength' => true, 'placeholder' => 'Middlename']) ?>
-
-    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true, 'placeholder' => 'Lastname']) ?>
-
-    <?= $form->field($model, 'avatar_path')->textInput(['maxlength' => true, 'placeholder' => 'Avatar Path']) ?>
-
-    <?= $form->field($model, 'avatar_base_url')->textInput(['maxlength' => true, 'placeholder' => 'Avatar Base Url']) ?>
-
-    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true, 'placeholder' => 'Phone Number']) ?>
-
-    <?= $form->field($model, 'birthday')->textInput(['maxlength' => true, 'placeholder' => 'Birthday']) ?>
-
-    <?= $form->field($model, 'total_points')->textInput(['placeholder' => 'Total Points']) ?>
-
-    <?= $form->field($model, 'locale')->textInput(['maxlength' => true, 'placeholder' => 'Locale']) ?>
-
-    <?= $form->field($model, 'gender')->textInput(['placeholder' => 'Gender']) ?>
-
-    <?= $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    ]) ?>
 
     <div class="form-group">
-    <?php if(Yii::$app->controller->action->id != 'save-as-new'): ?>
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    <?php endif; ?>
-    <?php if(Yii::$app->controller->action->id != 'create'): ?>
-        <?= Html::submitButton(Yii::t('app', 'Save As New'), ['class' => 'btn btn-info', 'value' => '1', 'name' => '_asnew']) ?>
-    <?php endif; ?>
-        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

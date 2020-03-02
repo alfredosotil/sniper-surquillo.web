@@ -1,80 +1,80 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\Service */
-/* @var $form yii\widgets\ActiveForm */
-
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Subscription', 
-        'relID' => 'subscription', 
-        'value' => \yii\helpers\Json::encode($model->subscriptions),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
+/* @var $model common\models\Service */
+/* @var $form yii\bootstrap\ActiveForm */
 ?>
 
 <div class="service-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?php echo $form->field($model, 'image')->widget(\trntv\filekit\widget\Upload::class, [
+        'url'=>['image-upload']
+    ]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Name']) ?>
+    <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'price')->textInput(['placeholder' => 'Price']) ?>
+    <?php echo $form->field($model, 'price')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' Soles',
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Short Description']) ?>
+    <?php echo $form->field($model, 'short_description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'placeholder' => 'Description']) ?>
+    <?php echo $form->field($model, 'full_description')->widget(
+        \kartik\markdown\MarkdownEditor::class,
+        ['height' => 200, 'encodeLabels' => false]
+    ) ?>
 
-    <?= $form->field($model, 'points')->textInput(['placeholder' => 'Points']) ?>
+    <?php echo $form->field($model, 'points')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'max' => 10000000,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'duration')->textInput(['placeholder' => 'Duration']) ?>
+    <?php echo $form->field($model, 'stock')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'max' => 10000000,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'image_path')->textInput(['maxlength' => true, 'placeholder' => 'Image Path']) ?>
+    <?php echo $form->field($model, 'duration')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'suffix' => ' days',
+                'digits' => 3,
+                'max' => 360,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'image_base_url')->textInput(['maxlength' => true, 'placeholder' => 'Image Base Url']) ?>
+    <?php echo $form->field($model, 'active')->widget(\kartik\checkbox\CheckboxX::class, [
+        'autoLabel' => true,
+        'pluginOptions' => ['threeState' => false]
+    ])->label(false) ?>
 
-    <?= $form->field($model, 'stock')->textInput(['placeholder' => 'Stock']) ?>
-
-    <?= $form->field($model, 'is_active')->textInput(['placeholder' => 'Is Active']) ?>
-
-    <?= $form->field($model, 'lock', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
-    <?php
-    $forms = [
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'Subscription')),
-            'content' => $this->render('_formSubscription', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->subscriptions),
-            ]),
-        ],
-    ];
-    echo kartik\tabs\TabsX::widget([
-        'items' => $forms,
-        'position' => kartik\tabs\TabsX::POS_ABOVE,
-        'encodeLabels' => false,
-        'pluginOptions' => [
-            'bordered' => true,
-            'sideways' => true,
-            'enableCache' => false,
-        ],
-    ]);
-    ?>
     <div class="form-group">
-    <?php if(Yii::$app->controller->action->id != 'save-as-new'): ?>
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    <?php endif; ?>
-    <?php if(Yii::$app->controller->action->id != 'create'): ?>
-        <?= Html::submitButton(Yii::t('app', 'Save As New'), ['class' => 'btn btn-info', 'value' => '1', 'name' => '_asnew']) ?>
-    <?php endif; ?>
-        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

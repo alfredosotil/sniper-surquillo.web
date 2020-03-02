@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\OrderDetail]].
+ * This is the ActiveQuery class for [[OrderDetail]].
  *
- * @see \common\models\query\OrderDetail
+ * @see OrderDetail
  */
 class OrderDetailQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\OrderDetail[]|array
+     * {@inheritdoc}
+     * @return OrderDetail[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class OrderDetailQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\OrderDetail|array|null
+     * {@inheritdoc}
+     * @return OrderDetail|array|null
      */
     public function one($db = null)
     {

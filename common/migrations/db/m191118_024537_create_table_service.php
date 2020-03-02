@@ -17,21 +17,18 @@ class m191118_024537_create_table_service extends Migration
             'name' => $this->string()->notNull(),
             'price' => $this->double()->notNull()->defaultValue('0'),
             'short_description' => $this->string()->notNull(),
-            'description' => $this->string()->notNull(),
+            'full_description' => $this->string()->notNull(),
             'points' => $this->integer(11),
             'duration' => $this->integer()->notNull(),
             'image_path' => $this->string()->null(),
             'image_base_url' => $this->string()->null(),
             'stock' => $this->integer()->notNull()->defaultValue('0'),
-            'is_active' => $this->smallInteger()->notNull()->defaultValue('1'),
+            'active' => $this->smallInteger()->notNull()->defaultValue('1'),
             'uuid' => $this->string(36),
-            'lock' => $this->bigInteger(),
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
-            'deleted_by' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
-            'deleted_at' => $this->integer(),
         ]);
     }
 
@@ -42,19 +39,4 @@ class m191118_024537_create_table_service extends Migration
     {
         $this->dropTable('{{%service}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m191118_024537_create_table_service cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

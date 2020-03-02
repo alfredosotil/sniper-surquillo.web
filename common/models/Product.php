@@ -2,49 +2,124 @@
 
 namespace common\models;
 
+use common\behaviors\UUIDBehavior;
+use common\models\query\ProductQuery;
+use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
-use \common\models\base\Product as BaseProduct;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "product".
+ * This is the model class for table "{{%product}}".
+ *
+ * @property int $id
+ * @property string $image
+ * @property string $name
+ * @property float $price
+ * @property string $short_description
+ * @property string $full_description
+ * @property int|null $points
+ * @property string|null $image_path
+ * @property string|null $image_base_url
+ * @property int $stock
+ * @property int $active
+ * @property string|null $uuid
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $created_at
+ * @property int|null $updated_at
  */
-class Product extends BaseProduct
+class Product extends \yii\db\ActiveRecord
 {
+
     /**
-     * @inheritdoc
+     * @var
+     */
+    public $image;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return '{{%product}}';
+    }
+
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            BlameableBehavior::class,
+            UUIDBehavior::class,
+            'picture' => [
+                'class' => UploadBehavior::class,
+                'attribute' => 'image',
+                'pathAttribute' => 'image_path',
+                'baseUrlAttribute' => 'image_base_url'
+            ]
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function rules()
     {
-        return array_replace_recursive(parent::rules(),
-	    [
-            [['name', 'short_description', 'description'], 'required'],
+        return [
+            [['name', 'short_description', 'full_description'], 'required'],
             [['price'], 'number'],
-            [['points', 'stock', 'is_active', 'lock', 'created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
-            [['name', 'short_description', 'description', 'image_path', 'image_base_url'], 'string', 'max' => 255],
+            [['points', 'stock', 'active', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'short_description', 'full_description', 'image_path', 'image_base_url'], 'string', 'max' => 255],
             [['uuid'], 'string', 'max' => 36],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
-        ]);
+            ['image', 'safe']
+        ];
     }
-	
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function attributeHints()
+    public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'price' => Yii::t('app', 'Price'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'description' => Yii::t('app', 'Description'),
-            'points' => Yii::t('app', 'Points'),
-            'image_path' => Yii::t('app', 'Image Path'),
-            'image_base_url' => Yii::t('app', 'Image Base Url'),
-            'stock' => Yii::t('app', 'Stock'),
-            'is_active' => Yii::t('app', 'Is Active'),
-            'uuid' => Yii::t('app', 'Uuid'),
-            'lock' => Yii::t('app', 'Lock'),
+            'id' => Yii::t('common', 'ID'),
+            'name' => Yii::t('common', 'Name'),
+            'price' => Yii::t('common', 'Price'),
+            'short_description' => Yii::t('common', 'Short Description'),
+            'full_description' => Yii::t('common', 'Full Description'),
+            'points' => Yii::t('common', 'Points'),
+            'image_path' => Yii::t('common', 'Image Path'),
+            'image_base_url' => Yii::t('common', 'Image Base Url'),
+            'stock' => Yii::t('common', 'Stock'),
+            'active' => Yii::t('common', 'Active'),
+            'uuid' => Yii::t('common', 'Uuid'),
+            'created_by' => Yii::t('common', 'Created By'),
+            'updated_by' => Yii::t('common', 'Updated By'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
+            'Image' => Yii::t('common', 'Image'),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ProductQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ProductQuery(get_called_class());
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNameAndPrice()
+    {
+        if ($this->name || $this->price) {
+            return $this->name . ' - ' . $this->price . ' soles';
+        }
+        return null;
     }
 }

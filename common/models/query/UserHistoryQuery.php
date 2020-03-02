@@ -3,21 +3,20 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\query\UserHistory]].
+ * This is the ActiveQuery class for [[UserHistory]].
  *
- * @see \common\models\query\UserHistory
+ * @see UserHistory
  */
 class UserHistoryQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\UserHistory[]|array
+     * {@inheritdoc}
+     * @return UserHistory[]|array
      */
     public function all($db = null)
     {
@@ -25,8 +24,8 @@ class UserHistoryQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return \common\models\query\UserHistory|array|null
+     * {@inheritdoc}
+     * @return UserHistory|array|null
      */
     public function one($db = null)
     {

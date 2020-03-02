@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\base\Product;
+use common\models\Product;
 
 /**
- * common\models\search\ProductSearch represents the model behind the search form about `common\models\base\Product`.
+ * ProductSearch represents the model behind the search form about `common\models\Product`.
  */
- class ProductSearch extends Product
+class ProductSearch extends Product
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ use common\models\base\Product;
     public function rules()
     {
         return [
-            [['id', 'points', 'stock', 'is_active', 'lock', 'created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'], 'integer'],
-            [['name', 'short_description', 'description', 'image_path', 'image_base_url', 'uuid'], 'safe'],
+            [['id', 'points', 'stock', 'active', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'short_description', 'full_description', 'image_path', 'image_base_url', 'uuid'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -48,11 +48,7 @@ use common\models\base\Product;
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -61,19 +57,16 @@ use common\models\base\Product;
             'price' => $this->price,
             'points' => $this->points,
             'stock' => $this->stock,
-            'is_active' => $this->is_active,
-            'lock' => $this->lock,
+            'active' => $this->active,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'deleted_by' => $this->deleted_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
-            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'full_description', $this->full_description])
             ->andFilterWhere(['like', 'image_path', $this->image_path])
             ->andFilterWhere(['like', 'image_base_url', $this->image_base_url])
             ->andFilterWhere(['like', 'uuid', $this->uuid]);

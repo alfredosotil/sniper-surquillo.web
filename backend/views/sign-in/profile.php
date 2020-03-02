@@ -32,6 +32,44 @@ $this->title = Yii::t('backend', 'Edit profile')
         UserProfile::GENDER_MALE => Yii::t('backend', 'Male')
     ]) ?>
 
+    <?php echo $form->field($model, 'total_points')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'max' => 10000000,
+                'min' => 0,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'phone_number')->widget(
+        \kartik\number\NumberControl::class, [
+            'maskedInputOptions' => [
+                'prefix' => '+51 ',
+                'groupSeparator' => ' ',
+                'digits' => 9   ,
+                'rightAlign' => false
+            ]
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'birthday')->widget(
+        \kartik\datecontrol\DateControl::class, [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
+        'ajaxConversion' => true,
+        'autoWidget' => true,
+        'displayFormat' => 'php:d-F-Y h:i:s A',
+        'saveFormat' => 'php:U',
+        'readonly' => true,
+        'widgetOptions' => [
+            'pluginOptions' => [
+                'autoclose' => true,
+                'todayHighlight' => true,
+                'todayBtn' => true,
+            ]
+        ],
+    ]) ?>
+
     <div class="form-group">
         <?php echo Html::submitButton(Yii::t('backend', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
