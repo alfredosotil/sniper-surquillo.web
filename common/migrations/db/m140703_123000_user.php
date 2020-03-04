@@ -36,6 +36,11 @@ class m140703_123000_user extends Migration
             'phone_number' => $this->string(32),
             'birthday' => $this->string(32),
             'total_points' => $this->integer(11),
+            'stamina' => $this->integer(3),
+            'guard' => $this->integer(3),
+            'pass' => $this->integer(3),
+            'takedown' => $this->integer(3),
+            'submission' => $this->integer(3),
             'locale' => $this->string(32)->notNull(),
             'gender' => $this->smallInteger(1),
         ]);

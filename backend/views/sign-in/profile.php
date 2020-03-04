@@ -70,6 +70,186 @@ $this->title = Yii::t('backend', 'Edit profile')
         ],
     ]) ?>
 
+    <?php echo $form->field($model, 'stamina')->widget(
+        \kartik\rating\StarRating::class, [
+            'pluginOptions' => [
+                'stars' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'defaultCaption' => '{rating} %',
+                'starCaptionClasses' => [
+                    0 => 'label label-danger badge-danger',
+                    5 => 'label label-danger badge-danger',
+                    10 => 'label label-danger badge-danger',
+                    15 => 'label label-danger badge-danger',
+                    20 => 'label label-danger badge-danger',
+                    25 => 'label label-danger badge-danger',
+                    30 => 'label label-warning badge-warning',
+                    35 => 'label label-warning badge-warning',
+                    40 => 'label label-warning badge-warning',
+                    45 => 'label label-warning badge-warning',
+                    50 => 'label label-info badge-info',
+                    55 => 'label label-info badge-info',
+                    60 => 'label label-info badge-info',
+                    65 => 'label label-info badge-info',
+                    70 => 'label label-primary badge-primary',
+                    75 => 'label label-primary badge-primary',
+                    80 => 'label label-primary badge-primary',
+                    85 => 'label label-primary badge-primary',
+                    90 => 'label label-success badge-success',
+                    95 => 'label label-success badge-success',
+                    100 => 'label label-success badge-success',
+                ],
+                'starCaptions' => new \yii\web\JsExpression("function(val){return val + ' %';}")
+            ],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'guard')->widget(
+        \kartik\rating\StarRating::class, [
+            'pluginOptions' => [
+                'stars' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'defaultCaption' => '{rating} %',
+                'starCaptionClasses' => [
+                    0 => 'label label-danger badge-danger',
+                    5 => 'label label-danger badge-danger',
+                    10 => 'label label-danger badge-danger',
+                    15 => 'label label-danger badge-danger',
+                    20 => 'label label-danger badge-danger',
+                    25 => 'label label-danger badge-danger',
+                    30 => 'label label-warning badge-warning',
+                    35 => 'label label-warning badge-warning',
+                    40 => 'label label-warning badge-warning',
+                    45 => 'label label-warning badge-warning',
+                    50 => 'label label-info badge-info',
+                    55 => 'label label-info badge-info',
+                    60 => 'label label-info badge-info',
+                    65 => 'label label-info badge-info',
+                    70 => 'label label-primary badge-primary',
+                    75 => 'label label-primary badge-primary',
+                    80 => 'label label-primary badge-primary',
+                    85 => 'label label-primary badge-primary',
+                    90 => 'label label-success badge-success',
+                    95 => 'label label-success badge-success',
+                    100 => 'label label-success badge-success',
+                ],
+                'starCaptions' => new \yii\web\JsExpression("function(val){return val + ' %';}")
+            ],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'pass')->widget(
+        \kartik\rating\StarRating::class, [
+            'pluginOptions' => [
+                'stars' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'defaultCaption' => '{rating} %',
+                'starCaptionClasses' => [
+                    0 => 'label label-danger badge-danger',
+                    5 => 'label label-danger badge-danger',
+                    10 => 'label label-danger badge-danger',
+                    15 => 'label label-danger badge-danger',
+                    20 => 'label label-danger badge-danger',
+                    25 => 'label label-danger badge-danger',
+                    30 => 'label label-warning badge-warning',
+                    35 => 'label label-warning badge-warning',
+                    40 => 'label label-warning badge-warning',
+                    45 => 'label label-warning badge-warning',
+                    50 => 'label label-info badge-info',
+                    55 => 'label label-info badge-info',
+                    60 => 'label label-info badge-info',
+                    65 => 'label label-info badge-info',
+                    70 => 'label label-primary badge-primary',
+                    75 => 'label label-primary badge-primary',
+                    80 => 'label label-primary badge-primary',
+                    85 => 'label label-primary badge-primary',
+                    90 => 'label label-success badge-success',
+                    95 => 'label label-success badge-success',
+                    100 => 'label label-success badge-success',
+                ],
+                'starCaptions' => new \yii\web\JsExpression("function(val){return val + ' %';}")
+            ],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'takedown')->widget(
+        \kartik\rating\StarRating::class, [
+            'pluginOptions' => [
+                'stars' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'defaultCaption' => '{rating} %',
+                'starCaptionClasses' => [
+                    0 => 'label label-danger badge-danger',
+                    5 => 'label label-danger badge-danger',
+                    10 => 'label label-danger badge-danger',
+                    15 => 'label label-danger badge-danger',
+                    20 => 'label label-danger badge-danger',
+                    25 => 'label label-danger badge-danger',
+                    30 => 'label label-warning badge-warning',
+                    35 => 'label label-warning badge-warning',
+                    40 => 'label label-warning badge-warning',
+                    45 => 'label label-warning badge-warning',
+                    50 => 'label label-info badge-info',
+                    55 => 'label label-info badge-info',
+                    60 => 'label label-info badge-info',
+                    65 => 'label label-info badge-info',
+                    70 => 'label label-primary badge-primary',
+                    75 => 'label label-primary badge-primary',
+                    80 => 'label label-primary badge-primary',
+                    85 => 'label label-primary badge-primary',
+                    90 => 'label label-success badge-success',
+                    95 => 'label label-success badge-success',
+                    100 => 'label label-success badge-success',
+                ],
+                'starCaptions' => new \yii\web\JsExpression("function(val){return val + ' %';}")
+            ],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'submission')->widget(
+        \kartik\rating\StarRating::class, [
+            'pluginOptions' => [
+                'stars' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 5,
+                'defaultCaption' => '{rating} %',
+                'starCaptionClasses' => [
+                    0 => 'label label-danger badge-danger',
+                    5 => 'label label-danger badge-danger',
+                    10 => 'label label-danger badge-danger',
+                    15 => 'label label-danger badge-danger',
+                    20 => 'label label-danger badge-danger',
+                    25 => 'label label-danger badge-danger',
+                    30 => 'label label-warning badge-warning',
+                    35 => 'label label-warning badge-warning',
+                    40 => 'label label-warning badge-warning',
+                    45 => 'label label-warning badge-warning',
+                    50 => 'label label-info badge-info',
+                    55 => 'label label-info badge-info',
+                    60 => 'label label-info badge-info',
+                    65 => 'label label-info badge-info',
+                    70 => 'label label-primary badge-primary',
+                    75 => 'label label-primary badge-primary',
+                    80 => 'label label-primary badge-primary',
+                    85 => 'label label-primary badge-primary',
+                    90 => 'label label-success badge-success',
+                    95 => 'label label-success badge-success',
+                    100 => 'label label-success badge-success',
+                ],
+                'starCaptions' => new \yii\web\JsExpression("function(val){return val + ' %';}")
+            ],
+        ]
+    ) ?>
+
     <div class="form-group">
         <?php echo Html::submitButton(Yii::t('backend', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
